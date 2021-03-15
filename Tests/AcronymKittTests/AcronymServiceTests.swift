@@ -15,13 +15,27 @@ final class AcronymServiceTests: XCTestCase {
         
         let results = sut.someCrazyBusinessLogic(fromAcronyms: [afk, brb, cmm,omw])
         
+        XCTAssertEqual(results.count, 4)
+        XCTAssertEqual(results.first?.short, afk.short)
+    }
+    
+    func testCrazyBusinessLogicWorksWithPrefixOfB() {
+        
+        let afk = MockAcronym(short: "AFK", long: "Away From Keyboard")
+        let brb = MockAcronym(short: "BRB", long: "Be Right Back")
+        let cmm = MockAcronym(short: "CMM", long: "Call Me Maybe")
+        let omw = MockAcronym(short: "OMW", long: "On My Way")
+        sut = AcronymService()
+        
+        let results = sut.someCrazyBusinessLogic(fromAcronyms: [afk, brb, cmm,omw], forShortCodesWithPrefix: "B")
+        
         XCTAssertEqual(results.count, 1)
         XCTAssertEqual(results.first?.short, brb.short)
     }
 
-    static var allTests = [
-        ("testCrazyBusinessLogicWorks", testCrazyBusinessLogicWorks),
-    ]
+//    static var allTests = [
+//        ("testCrazyBusinessLogicWorks", testCrazyBusinessLogicWorks),
+//    ]
 }
 
 class MockAcronym: AcronymProtocol {
